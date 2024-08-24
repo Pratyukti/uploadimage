@@ -1,4 +1,4 @@
-// src/pages/AboutUs.js
+
 import React from 'react';
 
 function AboutUs() {
