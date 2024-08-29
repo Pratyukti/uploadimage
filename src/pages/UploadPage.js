@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function UploadPage() {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
-  const navigate = useNavigate();
+  const [items, setItems] = useState([]);
 
   const handleImageChange = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -17,10 +15,13 @@ function UploadPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const items = JSON.parse(localStorage.getItem('items')) || [];
-    items.push({ image, description });
-    localStorage.setItem('items', JSON.stringify(items));
-    navigate('/display');
+    if (image && description) {
+      // Add the new item to the list
+      setItems([...items, { image, description }]);
+      // Clear the form fields
+      setImage();
+      setDescription('');
+    }
   };
 
   return (
@@ -37,6 +38,24 @@ function UploadPage() {
         </div>
         <button type="submit" className="btn btn-primary">Upload</button>
       </form>
+
+      {items.length > 0 && (
+        <div className="mt-4">
+          <h2>Uploaded Items</h2>
+          <div className="row">
+            {items.map((item, index) => (
+              <div key={index} className="col-md-4 mb-4">
+                <div className="card d-flex flex-row">
+                  <img src={item.image} className="img-fluid" alt="Uploaded" style={{ maxWidth: '200px', marginRight: '15px' }} />
+                  <div className="card-body">
+                    <p className="card-text">{item.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
