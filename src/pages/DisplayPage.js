@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../css/display.css'
 
 function DisplayPage() {
   const [items, setItems] = useState([]);
@@ -35,18 +36,26 @@ function DisplayPage() {
       {items.length === 0 ? (
         <p>No items to display.</p>
       ) : (
-        <div className="row">
+        <div className="">
           {items.map((item, index) => (
-            <div key={index} className="col-md-4 mb-4">
-              <div className="card card-custom">
-                <img src={item.image} className="card-img-top" alt="Uploaded" />
-                <div className="card-body">
-                  <p className="card-text">{truncateText(item.description, 100)}</p>
-                  <button className="btn btn-warning me-2" onClick={() => handleModify(index)}>Modify</button>
-                  <button className="btn btn-danger" onClick={() => handleDelete(index)}>Delete</button>
-                </div>
-              </div>
-            </div>
+           <div key={index} className="col-md-4 mb-4">
+           <div className="card card-custom d-flex flex-row">
+            <div>
+             <img src={item.image} className="card-img-top" alt="Uploaded" />
+             <div style={{marginTop:"10px"}}> 
+             <button className="btn btn-warning me-2" onClick={() => handleModify(index)}>Modify</button>
+             <button className="btn btn-danger" onClick={() => handleDelete(index)}>Delete</button>
+             </div>
+             </div>
+             <div className="card-body">
+               <p className="card-text">{truncateText(item.description, 100)}</p>
+               
+             </div>
+            
+           </div>
+          
+         </div>
+         
           ))}
         </div>
       )}
